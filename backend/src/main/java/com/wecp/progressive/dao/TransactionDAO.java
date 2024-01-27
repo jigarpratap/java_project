@@ -2,7 +2,7 @@ package com.wecp.progressive.dao;
 
 import com.wecp.progressive.entity.Transactions;
 
-import java.sql.SQLException;
+//import java.sql.SQLException;
 import java.util.List;
 
 public interface TransactionDAO {
