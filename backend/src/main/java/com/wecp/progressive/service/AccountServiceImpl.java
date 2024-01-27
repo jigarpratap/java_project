@@ -6,15 +6,16 @@ import com.wecp.progressive.entity.Accounts;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class AccountServiceImpl implements AccountService {
 
-    private static List<Accounts> accountsList = new ArrayList<>();
-    private AccountDAO accountDAO;
+    private static List<Accounts> list = new ArrayList<>();
+    private AccountDAO a;
 
     public AccountServiceImpl(AccountDAO accountDAO) {
-        this.accountDAO = accountDAO;
+        this.a = accountDAO;
     }
     @Override
     public List<Accounts> getAllAccounts() throws SQLException {
@@ -53,21 +54,24 @@ public class AccountServiceImpl implements AccountService {
     }
     @Override
     public List<Accounts> getAllAccountsSortedByBalanceFromArrayList() {
-        return null;
+        List<Accounts>sortedAccounts=list;
+        sortedAccounts.sort(Comparator.comparingDouble(Accounts::getBalance));
+        return sortedAccounts;
     }
 
     @Override
     public void emptyArrayList() {
-        
+        list=new ArrayList<>();
     }
 
     @Override
     public List<Accounts> getAllAccountsFromArrayList() {
-        return null;
+        return list;
     }
     
     @Override
-    public List<Accounts> addAccountToArrayList(Accounts accounts) {
-        return null;
+    public List<Accounts> addAccountToArrayList(Accounts acc) {
+        list.add(acc);
+        return list;
     }
 }
