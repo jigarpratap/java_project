@@ -1,7 +1,7 @@
 package com.wecp.progressive.service;
 
 
-//import com.wecp.progressive.dao.AccountDAO;
+import com.wecp.progressive.dao.AccountDAO;
 import com.wecp.progressive.entity.Accounts;
 
 import java.sql.SQLException;
@@ -9,64 +9,44 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import org.springframework.stereotype.Service;
-@Service
 public class AccountServiceImpl implements AccountService {
-    //private AccountDAO accountDAO;
+    private AccountDAO accountDAO;
 
     private static List<Accounts> accountsList = new ArrayList<>();
-    
+    public AccountServiceImpl(AccountDAO accountDAO) {
+        this.accountDAO = accountDAO;
+    }
 
     @Override
     public List<Accounts> getAllAccounts() throws SQLException {
-        return accountsList;
+        return accountDAO.getAllAccounts();
     }
 
     @Override
     public Accounts getAccountById(int accountId) throws SQLException {
-          for(Accounts a: accountsList){
-                    if(a.getAccountId()==accountId){
-                        return a;
-                    }
-          }
-          return null;
+        return accountDAO.getAccountById(accountId);
     }
 
     @Override
     public int addAccount(Accounts accounts) throws SQLException {
-          if(accounts.getAccountId()!=0 || accounts.getCustomerId()!=0){
-            accountsList.add(accounts);
-             return accounts.getAccountId();
-          }
-          return 0;
+        return accountDAO.addAccount(accounts);
     }
 
     @Override
     public void updateAccount(Accounts accounts) throws SQLException {
-          for(Accounts a:accountsList){
-            if(a.getAccountId()==accounts.getAccountId()){
-                a.setAccountId(accounts.getAccountId());
-                a.setCustomerId(accounts.getCustomerId());
-                a.setBalance(accounts.getBalance());
-            }
-          }
+        accountDAO.updateAccount(accounts);
     }
 
     @Override
     public void deleteAccount(int accountId) throws SQLException {
-          for(Accounts a:accountsList){
-             if(a.getAccountId()==accountId){
-                accountsList.remove(a);
-                break;
-             }
-          }
+        accountDAO.deleteAccount(accountId);
     }
 
     @Override
     public List<Accounts> getAllAccountsSortedByBalance() throws SQLException {
-        List<Accounts> sortedAccounts = accountsList;
+        List<Accounts> sortedAccounts = accountDAO.getAllAccounts();
         if (sortedAccounts != null) {
-            sortedAccounts.sort(Comparator.comparingDouble(Accounts::getBalance)); // Sort by account balance
+            sortedAccounts.sort(Comparator.comparingDouble(Accounts::getBalance)); 
         }
         return sortedAccounts;
     }
@@ -74,13 +54,13 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public List<Accounts> getAccountsByUser(int userId) throws SQLException{
-           return accountsList;
+        return accountDAO.getAllAccounts();
     }
 
     @Override
     public List<Accounts> getAllAccountsSortedByBalanceFromArrayList() {
         List<Accounts> sortedAccounts = accountsList;
-        sortedAccounts.sort(Comparator.comparingDouble(Accounts::getBalance)); // Sort by account balance
+        sortedAccounts.sort(Comparator.comparingDouble(Accounts::getBalance)); 
         return sortedAccounts;
     }
 

@@ -87,8 +87,8 @@ public class TransactionDAOImpl implements TransactionDAO{
             statement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
             statement.setInt(1, transaction.getAccountId());
             statement.setDouble(2, transaction.getAmount());
-            statement.setTimestamp(3, new Timestamp(transaction.getTransaction_date().getTime()));
-            statement.setString(4, transaction.getTransaction_type());
+            statement.setTimestamp(3, new Timestamp(transaction.getTransactionDate().getTime()));
+            statement.setString(4, transaction.getTransactionType());
             statement.executeUpdate();
 
             ResultSet resultSet = statement.getGeneratedKeys();
@@ -122,8 +122,8 @@ public class TransactionDAOImpl implements TransactionDAO{
             statement = connection.prepareStatement(sql);
             statement.setInt(1, transaction.getAccountId());
             statement.setDouble(2, transaction.getAmount());
-            statement.setTimestamp(3, new Timestamp(transaction.getTransaction_date().getTime()));
-            statement.setString(4, transaction.getTransaction_type());
+            statement.setTimestamp(3, new Timestamp(transaction.getTransactionDate().getTime()));
+            statement.setString(4, transaction.getTransactionType());
             statement.setInt(5, transaction.getTransactionId());
             statement.executeUpdate();
         } catch (SQLException e) {
