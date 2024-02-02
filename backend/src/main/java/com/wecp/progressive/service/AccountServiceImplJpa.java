@@ -1,25 +1,27 @@
 package com.wecp.progressive.service;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.wecp.progressive.entity.Accounts;
+//import com.wecp.progressive.exception.AccountNotFoundException;
 import com.wecp.progressive.repository.AccountRepository;
 
 @Service
 public class AccountServiceImplJpa implements AccountService {
-
+    
     @Autowired
     private AccountRepository accountRepository;
 
-    private static List<Accounts> accountsList=new ArrayList<>();
-    public AccountServiceImplJpa(AccountRepository accountRepository){
-        this.accountRepository=accountRepository;
+    public AccountServiceImplJpa (){
+
+    }
+
+    public AccountServiceImplJpa(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
     }
 
     @Override
@@ -33,56 +35,57 @@ public class AccountServiceImplJpa implements AccountService {
     }
 
     @Override
-    public Accounts getAccountById(int accountId) throws SQLException {
+    public Accounts getAccountById(int accountId) {
         return accountRepository.findById(accountId).get();
     }
 
     @Override
     public int addAccount(Accounts accounts) throws SQLException {
-       accountRepository.save(accounts);
-       return accounts.getAccountId();
+        return accountRepository.save(accounts).getAccountId();
     }
 
     @Override
     public void updateAccount(Accounts accounts) throws SQLException {
-        accountRepository.findById(accounts.getAccountId()).map(account->{
-            account.setCustomerId(accounts.getCustomerId());
-            account.setBalance(accounts.getBalance());
-            return accountRepository.save(account);
-        });
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updateAccount'");
     }
 
     @Override
     public void deleteAccount(int accountId) throws SQLException {
-        accountRepository.deleteById(accountId);
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'deleteAccount'");
     }
 
     @Override
     public List<Accounts> getAllAccountsSortedByBalance() throws SQLException {
-        return null;
+        // List<Accounts> accounts = accountRepository.findAll();
+        // Collections.sort(accounts);
+        return accountRepository.findByOrderByBalance();
     }
 
     @Override
     public List<Accounts> getAllAccountsFromArrayList() {
-        return accountsList;
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAllAccountsFromArrayList'");
     }
 
     @Override
     public List<Accounts> addAccountToArrayList(Accounts accounts) {
-        accountsList.add(accounts);
-        return accountsList;
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'addAccountToArrayList'");
     }
 
     @Override
     public List<Accounts> getAllAccountsSortedByBalanceFromArrayList() {
-        List<Accounts> sortedAccounts= accountsList;
-        Collections.sort(sortedAccounts);
-        return sortedAccounts;
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAllAccountsSortedByBalanceFromArrayList'");
     }
 
     @Override
     public void emptyArrayList() {
-        accountsList=new ArrayList<>();
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'emptyArrayList'");
     }
+
     
 }
